@@ -1,7 +1,7 @@
 ###### Texas Unblocked Games!
 
 Check out my website
-[sites.google.com/view/wtex]
+[Games!](https://sites.google.com/view/wtex)
 
 Games:
 
