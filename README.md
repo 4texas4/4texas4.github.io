@@ -9,3 +9,5 @@
 ### [Doom](https://4texas4.github.io/doom.html)
 
 ### [Shell Shockers](https://4texas4.github.io/shellshockers.html)
+
+### [Baldi's Basics](https://4texas4.github.io/baldibasics.html)
