@@ -4,10 +4,6 @@ Check out my [website](https://sites.google.com/view/wtex)
 
 Games:
 
-placeholder
+[Minecraft](https://4texas4.github.io/minecraft/)
 
-placeholder
-
-placeholder
-
-placeholder
+[Doom](https://4texas4.github.io/doom/)
