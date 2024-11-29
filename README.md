@@ -11,5 +11,3 @@
 ### [Shell Shockers](https://4texas4.github.io/shellshockers.html)
 
 ### [Baldi's Basics](https://4texas4.github.io/baldibasics.html)
-
-### [Mario Kart](https://4texas4.github.io/Mariokart.html)
