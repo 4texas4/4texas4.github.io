@@ -11,3 +11,5 @@
 ### [Shell Shockers](https://4texas4.github.io/shellshockers.html)
 
 ### [Baldi's Basics](https://4texas4.github.io/baldibasics.html)
+
+### [1v1.lol](https://4texas4.github.io/1v1lol.html)
