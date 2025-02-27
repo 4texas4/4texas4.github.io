@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Sound Board</title>
+    <style>
+        /* Add the rainbow background animation */
+        @keyframes rainbowBackground {
+            0% { background-color: red; }
+            14% { background-color: orange; }
+            28% { background-color: yellow; }
+            42% { background-color: green; }
+            57% { background-color: blue; }
+            71% { background-color: indigo; }
+            85% { background-color: violet; }
+            100% { background-color: red; }
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            gap: 25px;
+            padding: 20px;
+            animation: rainbowBackground 10s infinite linear; /* Apply the animation */
+        }
+
+        .volume-control, .speed-control {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-slider, .speed-slider {
+            width: 200px;
+            height: 15px;
+            -webkit-appearance: none;
+            background: #ddd;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb, .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover, .speed-slider::-webkit-slider-thumb:hover {
+            background: #45a049;
+        }
+
+        .volume-label, .speed-label {
+            font-size: 14px;
+            color: #333;
+            min-width: 60px;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .button-container {
+            text-align: center;
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .sound-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 5px;
+            font-size: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .sound-button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .sound-button:active {
+            transform: scale(0.95);
+        }
+
+        .button-label {
+            font-size: 12px;
+            color: #333;
+            word-wrap: break-word;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Volume Control -->
+    <div class="volume-control">
+        <span class="volume-label">Volume: 100%</span>
+        <input type="range" min="0" max="500" value="100" class="volume-slider" id="volumeSlider">
+    </div>
+
+    <!-- Speed Control -->
+    <div class="speed-control">
+        <span class="speed-label">Speed: 0</span>
+        <input type="range" min="-48" max="48" step="1" value="0" class="speed-slider" id="speedSlider">
+    </div>
+
+    <!-- Row 1 -->
+    <div class="row">
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/ahhhhhhhh.mp3')">▶</button>
+            <div class="button-label">Ahhhhhhhh</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/AndroidBeep.mp3')">▶</button>
+            <div class="button-label">Android Beep</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/backinmyday.mp3')">▶</button>
+            <div class="button-label">Back in my Day</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/bingchilling.mp3')">▶</button>
+            <div class="button-label">Bing Chilling</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/bruh.mp3')">▶</button>
+            <div class="button-label">Bruh</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/rizz.mp3')">▶</button>
+            <div class="button-label">Rizz Sound Effect</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/cornhub.mp3')">▶</button>
+            <div class="button-label">Cornhub</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/dababy.mp3')">▶</button>
+            <div class="button-label">DaBaby</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/sigmaboy.mp3')">▶</button>
+            <div class="button-label">Sigma Sigma Boy</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/eheheh.mp3')">▶</button>
+            <div class="button-label">Eheheh</div>
+        </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row">
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/lobotomy.mp3')">▶</button>
+            <div class="button-label">Lobotomy</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/emotionaldamage.mp3')">▶</button>
+            <div class="button-label">Emotional Damage</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/ermwhatthesigma.mp3')">▶</button>
+            <div class="button-label">Erm What The Sigma</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/FBIopenup.mp3')">▶</button>
+            <div class="button-label">FBI Open Up</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/fortnitedefaultdance.mp3')">▶</button>
+            <div class="button-label">Default Dance</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/getout.mp3')">▶</button>
+            <div class="button-label">Get Out</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/avracadavra.mp3')">▶</button>
+            <div class="button-label">Avadacudovra</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/gigachad.mp3')">▶</button>
+            <div class="button-label">Giga Chad</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/goofyahhlaugh.mp3')">▶</button>
+            <div class="button-label">Goofy Laugh</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/goofyahhsounds.mp3')">▶</button>
+            <div class="button-label">Goofy Sounds</div>
+        </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="row">
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/Yeet.mp3')">▶</button>
+            <div class="button-label">Yeet</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/sootcase.mp3')">▶</button>
+            <div class="button-label">Sootcase</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/gulpgulpgulp.mp3')">▶</button>
+            <div class="button-label">Gulp Gulp</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/indian.mp3')">▶</button>
+            <div class="button-label">Indian</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/lightskinstare.mp3')">▶</button>
+            <div class="button-label">Light Skin Stare</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/lore.mp3')">▶</button>
+            <div class="button-label">Lore</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/metalpipe.mp3')">▶</button>
+            <div class="button-label">Metal Pipe</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/openthedoor.mp3')">▶</button>
+            <div class="button-label">Open The Door</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/quandaledingle.mp3')">▶</button>
+            <div class="button-label">Quandale Dingle</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/sikomode.mp3')">▶</button>
+            <div class="button-label">Sicko Mode</div>
+        </div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="row">
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/stopthecap.mp3')">▶</button>
+            <div class="button-label">Stop The Cap</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/swaglikeohio.mp3')">▶</button>
+            <div class="button-label">Swag Like Ohio</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/notification.mp3')">▶</button>
+            <div class="button-label">Notification</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/thickofit.mp3')">▶</button>
+            <div class="button-label">Thick Of It</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/uwu.mp3')">▶</button>
+            <div class="button-label">UwU</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/Vine Boom.mp3')">▶</button>
+            <div class="button-label">Vine Boom</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/We do not care.mp3')">▶</button>
+            <div class="button-label">We Do Not Care</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/wetfart.mp3')">▶</button>
+            <div class="button-label">Wet Fart</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/whatdadogdoin.mp3')">▶</button>
+            <div class="button-label">What Da Dog Doin</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/whyareyourunning.mp3')">▶</button>
+            <div class="button-label">Why Are You Running</div>
+        </div>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="row">
+         <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/whyyoubullyme.mp3')">▶</button>
+            <div class="button-label">Why You Bully Me</div>
+        </div>
+         <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/cutg.mp3')">▶</button>
+            <div class="button-label">I like ya cut G</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/boutacuh.mp3')">▶</button>
+            <div class="button-label">Im 'bout to cuuuuuh</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/goo.mp3')">▶</button>
+            <div class="button-label">Gigity GIgity Goo</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/spicy.mp3')">▶</button>
+            <div class="button-label">Why is is spicy?</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/supercell.mp3')">▶</button>
+            <div class="button-label">Supercell Intro</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/phonelinging.mp3')">▶</button>
+            <div class="button-label">Yo Phone Linging</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/omgbruh.mp3')">▶</button>
+            <div class="button-label">OMG Bruh Oh Heck Naw</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/cat.mp3')">▶</button>
+            <div class="button-label">OIIAIIOIIIIAII</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/gegagedigedagedago.mp3')">▶</button>
+            <div class="button-label">gegagedigedagedago</div>
+        </div>
+    </div>
+
+       <!-- Row 6 -->
+    <div class="row">
+         <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/kya.mp3')">▶</button>
+            <div class="button-label">Cooking with kya</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/month.mp3')">▶</button>
+            <div class="button-label">Its the firstt of the month</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/peekaboo.mp3')">▶</button>
+            <div class="button-label">Peekaboo</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/needthis.mp3')">▶</button>
+            <div class="button-label">Please Speed</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/lebron.mp3')">▶</button>
+            <div class="button-label">Lebron!!!</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/lebronsong.mp3')">▶</button>
+            <div class="button-label">Lebron Song</div>
+        </div>
+        <div class="button-container">
+            <button class="sound-button" onclick="playSound('sounds/nito.mp3')">▶</button>
+            <div class="button-label">Nito Braids</div>
+        </div>
+    </div>
+
+
+    <script>
+        let currentAudio = null;
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeLabel = document.querySelector('.volume-label');
+        const speedSlider = document.getElementById("speedSlider");
+        const speedLabel = document.querySelector(".speed-label");
+
+        const context = new (window.AudioContext || window.webkitAudioContext)();
+        let gainNode = null;
+        let speedNode = context.createGain(); // Create a gain node for volume
+        let playbackRate = 1; // Default speed (playback rate)
+
+        volumeSlider.addEventListener('input', function() {
+            const volume = this.value;
+            volumeLabel.textContent = `Volume: ${volume}%`;
+            if (gainNode) {
+                gainNode.gain.value = volume / 100;
+            }
+        });
+
+        speedSlider.addEventListener("input", function() {
+            const speedValue = parseInt(this.value);
+            speedLabel.textContent = `Speed: ${speedValue}`;
+
+            playbackRate = Math.pow(2, speedValue / 12); // Converts speed to a ratio
+            if (currentAudio) {
+                currentAudio.playbackRate = playbackRate; // Adjust speed without changing speed
+            }
+        });
+
+        function playSound(soundFile) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+
+            currentAudio = new Audio(soundFile);
+            const source = context.createMediaElementSource(currentAudio);
+            gainNode = context.createGain();
+            
+            gainNode.gain.value = volumeSlider.value / 100;
+            source.connect(gainNode);
+            gainNode.connect(context.destination);
+            
+            currentAudio.playbackRate = playbackRate; // Apply speed control
+            currentAudio.play().catch(error => {
+                console.error('Error playing sound:', error);
+            });
+        }
+
+        document.body.addEventListener('click', function() {
+            if (context.state === 'suspended') {
+                context.resume();
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
