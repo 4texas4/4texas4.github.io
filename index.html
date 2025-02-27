@@ -1,7 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="refresh" content="0; url=https://sites.google.com/view/wtex">
-    <title>Redirecting...</title>
+  <meta charset="UTF-8">
+  <title>Texas Games</title>
+  <style>
+    /* Animate the body background through rainbow colors */
+    body {
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      animation: rainbow 10s ease infinite;
+    }
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Container for the content */
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 500px;
+    }
+    /* Common button styles with increased border-radius */
+    .big-button, .small-button {
+      text-decoration: none;
+      border-radius: 20px;
+      transition: background 0.3s ease;
+      color: white;
+    }
+    /* Large Games Button */
+    .big-button {
+      display: block;
+      width: 90%;
+      margin: 10px auto;
+      padding: 20px;
+      background: black;
+      font-size: 1.5em;
+      text-align: center;
+    }
+    .big-button:hover {
+      background: #333;
+    }
+    /* Container for the two small buttons */
+    .small-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    /* Smaller buttons for Soundboard and Clock */
+    .small-button {
+      padding: 10px;
+      background: black;
+      flex: 1;
+      margin: 0 5px;
+      font-size: 1em;
+      text-align: center;
+    }
+    .small-button:hover {
+      background: #333;
+    }
+  </style>
 </head>
+<body>
+  <div class="container">
+    <h1>Texas Games</h1>
+    <!-- Big Games button -->
+    <a href="https://sites.google.com/view/wtex" class="big-button">Games</a>
+    <!-- Smaller buttons for Soundboard and Clock -->
+    <div class="small-buttons">
+      <a href="https://4texas4.github.io/soundboard" class="small-button">Soundboard</a>
+      <a href="https://4texas4.github.io/clock" class="small-button">Clock</a>
+    </div>
+  </div>
+</body>
 </html>
