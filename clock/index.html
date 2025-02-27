@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Clock & Countdown Timer</title>
+    <link rel="icon" href="clock.png" type="image/png"> <!-- Favicon added -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+            font-family: 'Comic Neue', sans-serif;
+        }
+        #clock-container, #timer-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+            font-size: 140px;
+            color: #333;
+        }
+        #seconds-container {
+            font-size: 84px;
+            margin-left: 12px;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            top: -10px;
+        }
+        #ampm {
+            font-size: 140px;
+            margin-left: 35px;
+        }
+        #inputContainer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 10px 20px;
+            font-size: 24px;
+            border: none;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+        #clearButton {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock-container">
+        <div id="time"></div>
+        <div id="seconds-container">
+            <div id="seconds"></div>
+        </div>
+        <div id="ampm"></div>
+    </div>
+
+    <div id="inputContainer">
+        <input type="time" id="timeInput">
+        <button onclick="startCountdown()">Start Countdown</button>
+    </div>
+
+    <div id="timer-container" style="display:none;">
+        <div id="countdown-time"></div>
+    </div>
+    
+    <button id="clearButton" onclick="resetCountdown()">Clear</button>
+
+    <script>
+        let countdownInterval;
+
+        // Updated to refresh every 1 millisecond
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            document.getElementById('time').innerHTML = `${hours}:${minutes}`;
+            document.getElementById('seconds').innerHTML = `:${seconds}.${milliseconds}`;
+            document.getElementById('ampm').innerHTML = ` ${ampm}`;
+        }
+
+        // Set the interval to update every 1 millisecond
+        setInterval(updateClock, 1);
+        updateClock();
+
+        function startCountdown() {
+            const timeInput = document.getElementById('timeInput').value;
+            if (!timeInput) {
+                alert("Please enter a time.");
+                return;
+            }
+            document.getElementById('clock-container').style.display = 'none';
+            document.getElementById('inputContainer').style.display = 'none';
+            document.getElementById('timer-container').style.display = 'flex';
+            document.getElementById('clearButton').style.display = 'block';
+
+            const now = new Date();
+            const targetTime = new Date(now);
+            const [hours, minutes] = timeInput.split(':');
+            targetTime.setHours(hours);
+            targetTime.setMinutes(minutes);
+            targetTime.setSeconds(0);
+            targetTime.setMilliseconds(0);
+            if (targetTime < now) {
+                targetTime.setDate(targetTime.getDate() + 1);
+            }
+
+            countdownInterval = setInterval(function () {
+                const remainingTime = targetTime - new Date();
+                if (remainingTime <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdown-time').innerText = "00:00:00.000";
+                } else {
+                    const hoursLeft = String(Math.floor(remainingTime / (1000 * 60 * 60))).padStart(2, '0');
+                    const minutesLeft = String(Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                    const secondsLeft = String(Math.floor((remainingTime % (1000 * 60)) / 1000)).padStart(2, '0');
+                    const millisecondsLeft = String(remainingTime % 1000).padStart(3, '0');
+                    document.getElementById('countdown-time').innerText = `${hoursLeft}:${minutesLeft}:${secondsLeft}.${millisecondsLeft}`;
+                }
+            }, 1);
+        }
+
+        function resetCountdown() {
+            clearInterval(countdownInterval);
+            document.getElementById('timer-container').style.display = 'none';
+            document.getElementById('inputContainer').style.display = 'block';
+            document.getElementById('clock-container').style.display = 'flex';
+            document.getElementById('clearButton').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
