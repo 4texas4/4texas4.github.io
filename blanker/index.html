@@ -15,44 +15,27 @@
             background-color: #f0f0f0;
         }
 
-        .game-btn {
-            padding: 8px 24px;
-            background: #fffcfc;
-            color: black;
-            border-radius: 7px;
-            font-family: "Comic Sans MS", "Comic Sans", sans-serif;
-            font-size: 24px;
-            font-weight: 500;
-            text-decoration: none;
-            cursor: pointer;
-            box-sizing: border-box;
-            text-align: center;
-            transition: background 0.3s ease, transform 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .game-btn:hover {
-            background: #d3d3d3;
-            transform: scale(1.05);
-        }
-
         .input-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            align-items: center; /* Align input and button in a row */
+            flex-direction: row; /* Initially row, for larger screens */
+            justify-content: center;
+            width: 100%;
+            max-width: 400px; /* Ensure elements don’t get too wide */
         }
 
         input[type="text"] {
             padding: 10px;
             font-size: 18px;
-            width: 300px;
             border-radius: 7px;
             border: 2px solid #ccc;
-            margin-bottom: 10px;
+            margin-right: 10px; /* Add space between input and button */
+            width: 100%;
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
         }
 
         .submit-btn {
-            padding: 8px 24px;
+            padding: 10px 24px;
             background: #fffcfc;
             color: black;
             border-radius: 7px;
@@ -62,11 +45,30 @@
             box-sizing: border-box;
             text-align: center;
             transition: background 0.3s ease, transform 0.3s ease;
+            width: 100%;
         }
 
         .submit-btn:hover {
             background: #d3d3d3;
             transform: scale(1.05);
+        }
+
+        /* Media Query for smaller screens */
+        @media (max-width: 600px) {
+            .input-container {
+                flex-direction: column; /* Stack vertically on small screens */
+                align-items: stretch;  /* Make the button and input take full width */
+            }
+
+            input[type="text"], .submit-btn {
+                width: 100%; /* Ensure input and button have the same width */
+                margin-right: 0; /* Remove margin-right as they will be stacked */
+                margin-bottom: 10px; /* Add space between input and button */
+            }
+
+            .submit-btn {
+                margin-top: 10px; /* Add margin between button and input */
+            }
         }
     </style>
 </head>
