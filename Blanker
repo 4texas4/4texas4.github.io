@@ -1,0 +1,60 @@
+<style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: row; /* Arrange the buttons horizontally */
+}
+
+.game-btn {
+    display: block;
+    padding: 8px 24px;
+    background: #fffcfc;
+    color: black;
+    border-radius: 7px;
+    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+    font-size: 24px; /* Increase font size for visibility */
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.game-btn:hover {
+    background: #d3d3d3; /* Grey color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+</style>
+
+<body>
+    <a class="game-btn" onclick="openWebsite()">></a>
+
+    <script>
+        function openWebsite() {
+            // Prompt the user to enter a website URL
+            var website = prompt("Please enter the website URL (e.g., https://example.com):");
+
+            // If the user entered a valid website, open it in a new tab with an iframe
+            if (website) {
+                // Open about:blank in a new tab
+                var newWindow = window.open('about:blank', '_blank');
+
+                // Check if the pop-up was blocked
+                if (newWindow) {
+                    // Inject the iframe into the blank page
+                    var iframeHTML = `<iframe src="${website}" style="border:0;width:100vw;height:100vh;position:fixed;inset:0;margin:0"></iframe>`;
+                    newWindow.document.write(iframeHTML);
+                    newWindow.document.close();
+                } else {
+                    alert("Pop-up blocked! Please allow pop-ups for this website.");
+                }
+            } else {
+                alert("You didn't enter a valid website.");
+            }
+        }
+    </script>
+</body>
