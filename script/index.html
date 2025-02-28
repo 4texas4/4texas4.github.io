@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Executor</title>
+</head>
+<body>
+    <h1>JavaScript Executor</h1>
+
+    <label for="url">Enter URL:</label><br>
+    <input type="text" id="url" placeholder="Enter URL here" style="width: 300px;"><br><br>
+
+    <label for="javascript">Enter JavaScript:</label><br>
+    <textarea id="javascript" rows="4" cols="50" placeholder="Enter JavaScript code here"></textarea><br><br>
+
+    <button onclick="executeCode()">Run JavaScript</button>
+
+    <script>
+        function executeCode() {
+            var url = document.getElementById("url").value;
+            var javascriptCode = document.getElementById("javascript").value;
+
+            if (url) {
+                // If a URL is provided, open it in a new tab
+                window.open(url, "_blank");
+            }
+
+            if (javascriptCode) {
+                try {
+                    // Execute the JavaScript code entered
+                    eval(javascriptCode);
+                } catch (error) {
+                    alert("Error executing JavaScript: " + error.message);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
