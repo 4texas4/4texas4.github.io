@@ -1,51 +1,96 @@
-<style>
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    flex-direction: row; /* Arrange the buttons horizontally */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Website</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column; /* Arrange elements vertically */
+            background-color: #f0f0f0;
+        }
 
-.game-btn {
-    display: block;
-    padding: 8px 24px;
-    background: #fffcfc;
-    color: black;
-    border-radius: 7px;
-    font-family: "Comic Sans MS", "Comic Sans", sans-serif;
-    font-size: 24px; /* Increase font size for visibility */
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    box-sizing: border-box;
-    text-align: center;
-    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition */
-}
+        .game-btn {
+            padding: 8px 24px;
+            background: #fffcfc;
+            color: black;
+            border-radius: 7px;
+            font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: center;
+            transition: background 0.3s ease, transform 0.3s ease;
+            margin-top: 20px;
+        }
 
-.game-btn:hover {
-    background: #d3d3d3; /* Grey color on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
-}
-</style>
+        .game-btn:hover {
+            background: #d3d3d3;
+            transform: scale(1.05);
+        }
 
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 18px;
+            width: 300px;
+            border-radius: 7px;
+            border: 2px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn {
+            padding: 8px 24px;
+            background: #fffcfc;
+            color: black;
+            border-radius: 7px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: center;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #d3d3d3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
 <body>
-    <a class="game-btn" onclick="openWebsite()">About Blanker</a>
+    <div class="input-container">
+        <input type="text" id="urlInput" placeholder="Enter URL (https://)">
+        <button class="submit-btn" onclick="openWebsite()">Open Website</button>
+    </div>
 
     <script>
         function openWebsite() {
-            // Prompt the user to enter a website URL
-            var website = prompt("Enter the URL make sure you add a https://");
+            var website = document.getElementById('urlInput').value;
 
-            // If the user entered a valid website, open it in a new tab with an iframe
-            if (website) {
-                // Open about:blank in a new tab
+            // Automatically add "https://" if the user didn't include it
+            if (website && !/^https?:\/\//i.test(website)) {
+                website = 'https://' + website;
+            }
+
+            // Validate the formatted URL
+            if (website && isValidURL(website)) {
+                // Open a new tab and inject the iframe into it
                 var newWindow = window.open('about:blank', '_blank');
-
-                // Check if the pop-up was blocked
+                
                 if (newWindow) {
-                    // Inject the iframe into the blank page
                     var iframeHTML = `<iframe src="${website}" style="border:0;width:100vw;height:100vh;position:fixed;inset:0;margin:0"></iframe>`;
                     newWindow.document.write(iframeHTML);
                     newWindow.document.close();
@@ -53,8 +98,15 @@ body {
                     alert("Pop-up blocked! Please allow pop-ups for this website.");
                 }
             } else {
-                alert("You didn't enter a valid website.");
+                alert("You entered an invalid URL.");
             }
+        }
+
+        function isValidURL(url) {
+            // Regular expression to check the general URL structure and secure protocol
+            const regex = /^(https:\/\/)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+([\/?].*)?$/;
+            return regex.test(url);
         }
     </script>
 </body>
+</html>
