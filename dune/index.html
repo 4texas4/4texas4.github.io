@@ -68,12 +68,14 @@
     const loadingBar = document.getElementById("unity-loading-bar");
     const progressBarFull = document.getElementById("unity-progress-bar-full");
 
-    const loaderUrl = "curve-rush.loader.js";
+    const buildUrl = "./dune";
+    
+    const loaderUrl = buildUrl + "/curve-rush.loader.js";
 
     const config = {
-      dataUrl: "curve-rush.data",
-      frameworkUrl: "curve-rush.framework.js",
-      codeUrl: "curve-rush.wasm",
+      dataUrl: buildUrl + "/curve-rush.data",
+      frameworkUrl: buildUrl + "/curve-rush.framework.js",
+      codeUrl: buildUrl + "/curve-rush.wasm",
       companyName: "Greenlight",
       productName: "Curve Rush",
       productVersion: "1.0"
