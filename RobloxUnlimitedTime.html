@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<title>Play</title>
+<style>
+html,body{background:#fff!important;margin:0}
+@keyframes _sp{to{transform:rotate(360deg)}}
+#splash{position:fixed;inset:0;z-index:999999;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+#splash-ring{width:48px;height:48px;border:4px solid #e5e5e5;border-top-color:#0066ff;border-radius:50%;animation:_sp .8s linear infinite!important}
+#splash-bar-wrap{width:200px;height:6px;background:#eee;border-radius:99px;overflow:hidden}
+#splash-bar{height:100%;width:0%;background:#0066ff;border-radius:99px;transition:width .3s ease}
+#splash-msg{font-size:13px;color:#888;min-height:18px}
+</style>
+
+
+<style id="run-css">
+body,html{margin:0;background:#000;height:100%}.container{position:relative;width:100%;height:100%}.container.has-a-div{padding:0 180px 120px 180px;box-sizing:border-box}.container.hide-vertical{padding:120px 0 120px 0!important;box-sizing:border-box}*{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.rotate{transform:rotate(90deg);transform-origin:28.1% 50%}.spinner{width:60px;height:60px;border-radius:50%;background:conic-gradient(rgba(255,255,255,0),rgba(255,255,255,0),rgba(255,255,255,.5),#fff);mask-image:radial-gradient(circle,rgba(0,0,0,0) 58%,#000 59%);animation:spin 1s linear infinite}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.loading{width:100vw;height:100vh;background:#fff;z-index:9999;pointer-events:auto}.run-spinner{width:44px;height:44px;border:3px solid #eee;border-top-color:#0066ff;border-radius:50%;animation:spin2 0.8s linear infinite}@keyframes spin2{to{transform:rotate(360deg)}}.a-div-vertical{min-height:600px;width:300px;background:#26252b;position:fixed;z-index:9996;top:10px;overflow:hidden;display:flex;flex-flow:column;align-items:center}.a-div-horizontal{left:50%;transform:translateX(-50%);height:100px;min-width:720px;background:#26252b;position:fixed;z-index:9996;overflow:hidden;display:flex;justify-content:center;align-items:center}.a-div-placeholder{white-space:pre-line;word-break:break-word;width:100%;position:absolute;transform:translateY(-50%);top:50%;padding:0 1rem;box-sizing:border-box;text-align:center;font-size:1rem;z-index:-1;color:#929295}.yellow{color:#ffeb00!important}.red{color:#fc4a5e!important}.green{color:#6cff00!important}#remote-video{width:100%;height:100%;object-fit:fill}.video{filter:contrast(1.06) saturate(1.06)}.startGame{display:none}#canvasCoc{width:100%;height:100%;position:absolute;top:0;left:0;z-index:899}.game{position:relative;height:100%;overflow:hidden;display:flex;justify-content:center;align-items:center}.input-div{height:3rem;position:fixed;width:600px;right:0;left:0;margin:auto;pointer-events:auto;z-index:99998}.input-div_input{display:block;width:100%;height:100%;outline:0;border-radius:1.5rem;padding:0 6rem 0 1.5rem;font-size:1.4rem;box-sizing:border-box;position:relative;background:#fff;z-index:2;opacity:.7}.input-div_div{position:absolute;width:6rem;right:0;bottom:0;height:100%;display:flex;justify-content:center;align-items:center;z-index:3}.input-div_div_button{background-color:#7b6cc4;width:4rem;height:1.8rem;border:0;border-radius:.9rem;opacity:1;cursor:pointer}.swal2-container{z-index:99999;position:fixed;top:0;left:0;width:100%;height:100%}.keyboard{text-align:center;position:fixed;width:100%;height:100%;z-index:999;margin:auto}.keyboard-no-pointer{pointer-events:none}.keyboard-key{position:absolute;backdrop-filter:blur(2px);font-size:.6rem;color:#fff;user-select:none;touch-action:none;transition:transform 80ms,box-shadow 80ms}.keyboard-key-remove{position:absolute;height:16px;width:16px;color:#fff;top:-16px;right:-16px;display:flex;justify-content:center;align-items:center;border-radius:50%;cursor:pointer}.keyboard-key-text{cursor:grab;background:linear-gradient(to top,rgba(92,109,130,.7),rgba(60,70,81,.7));border-radius:50%}.keyboard-key-small{transform:translate(-50%,50%);border-radius:50%;height:1.6rem;width:1.6rem;line-height:1.6rem;display:flex;align-items:center;justify-content:center}.keyboard-key-large{border-radius:1rem;height:2rem;width:4rem;line-height:2rem}.keyboard-key-press{background-color:transparent!important}.keyboard-lock{opacity:.6;text-align:center;position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:12px;border-radius:1.1rem;height:2.2rem;line-height:2.2rem;background-color:rgba(0,0,0,.4);padding:0 1.1rem;backdrop-filter:blur(10px);color:#fff;border:1px #fff solid}.keyboard-editor{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:12px;padding:0 1.1rem;display:flex;gap:2rem}.editor-btn{height:2.2rem;line-height:2.2rem;width:6.5rem;border-radius:1.1rem;cursor:pointer;color:#fff;font-size:1rem;text-align:center;display:inline-block}.layout-btn select{width:100%;height:100%;padding-left:10px;border:none;outline:0;font-size:1rem;background:#5a6c78;color:#fff}.reset-btn{background:linear-gradient(145deg,#5a6c78,#3f4f5b)}.add-key-btn{background:linear-gradient(145deg,#47537a,#5c6ac4)}.done-btn{background:linear-gradient(145deg,#5c6ac4,#8fa0ff)}.l-rocker{transform:translate(-50%,50%);position:absolute;cursor:grab;width:150px;height:150px;background-color:rgba(0,0,0,.1);border-radius:50%}.l-rocker-key{position:absolute;background:linear-gradient(to top,rgba(92,109,130,.7),rgba(60,70,81,.7));backdrop-filter:blur(2px);font-size:.6rem;color:#fff}.l-rocker-key-small{transform:translate(-50%,50%);border-radius:50%;height:1.6rem;width:1.6rem;line-height:1.6rem}.ping{display:none!important}#floating-ball{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;position:fixed;cursor:grab;z-index:9998;overflow:hidden;background:rgba(255,255,255,.9);box-shadow:0 2px 8px rgba(0,0,0,.2)}.menu{width:100%;height:100%;position:fixed;left:0;top:0;z-index:9998}.sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.5);z-index:3;display:flex;justify-content:flex-end;align-items:center}.sidebar{overflow:hidden;height:100%;width:300px;background-color:#232830;position:absolute;left:-300px;top:0;z-index:4;transition:transform .3s ease;display:flex;flex-direction:column;gap:.5rem;justify-content:center}.sidebar-open{transform:translateX(100%);transition:all .2s ease}.sidebar-button{display:flex;justify-content:space-between;align-content:center;height:3.5rem;box-sizing:border-box;text-align:left;width:100%;padding:0 1rem;border:none;background:0 0;color:#a1a1aa;font-size:1rem}.sidebar-button-btn{margin:auto 0;background-color:#3b4463;border:1px #818cf8 solid;width:4rem;text-align:center;height:2rem;line-height:2rem;border-radius:1rem;color:#fff;cursor:pointer}.switch{margin:auto 0;position:relative;display:inline-block;width:50px;height:24px}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#42505b;transition:.3s;border-radius:24px}.slider::before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background-color:#717274;transition:.3s;border-radius:50%}input:checked+.slider{background-color:#818cf8}input:checked+.slider::before{background-color:#fff;transform:translateX(26px)}.reward-btn{z-index:9999;font-size:14px;display:flex;justify-content:space-between;align-items:center;color:#fff;opacity:1;border-radius:17px;background:#3b4563;padding:9px 15px;border:none;cursor:pointer}
+/* login */
+#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:#f5f5f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;position:fixed;inset:0;z-index:10000}
+#form-box{width:90%;max-width:340px;background:#fff;border:1px solid #e5e5e5;border-radius:16px;padding:32px 28px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(0,0,0,.06)}
+#form-box h2{font-size:20px;font-weight:700;color:#111;margin:0 0 2px}
+#form-box p{font-size:13px;color:#888;margin:0 0 4px}
+#login-screen input{width:100%;padding:11px 14px;background:#f9f9f9;border:1px solid #ddd;border-radius:10px;color:#111;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box}
+#login-screen input:focus{border-color:#0066ff;background:#fff}
+#login-error{font-size:12px;color:#ef4444;min-height:16px}
+#submit-btn{width:100%;padding:12px;background:#0066ff;border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity .2s}
+#submit-btn:hover{opacity:.88}
+#submit-btn:disabled{opacity:.5;cursor:default}
+#create-link{text-align:center;color:#0066ff;font-size:13px;cursor:pointer;text-decoration:none;margin-top:4px;background:none;border:none;font-family:inherit;opacity:.8}
+#create-link:hover{opacity:1;text-decoration:underline}
+#vid-bg{display:none;position:fixed;inset:0;z-index:10001;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);align-items:center;justify-content:center}
+#vid-bg.open{display:flex}
+#vid-box{background:#fff;border:1px solid #e5e5e5;border-radius:16px;padding:20px;width:96vw;max-width:1100px;display:flex;flex-direction:column;gap:14px;box-shadow:0 8px 40px rgba(0,0,0,.15)}
+#vid-header{display:flex;align-items:center;justify-content:space-between}
+#vid-header h2{font-size:16px;font-weight:700;color:#111}
+#vid-close{background:#f0f0f0;border:none;color:#333;width:32px;height:32px;border-radius:50%;font-size:15px;cursor:pointer;font-family:inherit}
+#vid-close:hover{background:#e0e0e0}
+#vid-box video{width:100%;display:block;border-radius:10px;background:#000}
+</style>
+
+
+<script>
+window.dataLayer = window.dataLayer || [];
+window.gtag = window.gtag || function() { window.dataLayer.push(arguments); };
+gtag('js', new Date());
+gtag('config', 'G-Q30NXCCZNN');
+</script>
+
+
+<script src="https://s3.ap-southeast-1.amazonaws.com/cdn.cloudbatata.com/ajax/libs/vue/2.6.12/vue.min.js"></script>
+<script src="https://s3.ap-southeast-1.amazonaws.com/cdn.cloudbatata.com/ajax/libs/socket.io/2.4.0/socket.io.js"></script>
+<script src="https://s3.ap-southeast-1.amazonaws.com/cdn.cloudbatata.com/ajax/libs/vConsole/3.3.4/vconsole.min.js"></script>
+<script src="https://s3.ap-southeast-1.amazonaws.com/cdn.cloudbatata.com/ajax/libs/axios/0.26.0/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.2/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/adapterjs@0.15.5/publish/adapter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/loglevel@1.9.2/dist/loglevel.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.2/dist/sweetalert2.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.2/themes/material-ui.css" rel="stylesheet"/>
+</head>
+<body style="height:100%!important">
+<div id="splash">
+  <div id="splash-ring"></div>
+  <div id="splash-bar-wrap"><div id="splash-bar"></div></div>
+  <div id="splash-msg">Loading...</div>
+</div>
+<div id="login-screen">
+  <div id="form-box">
+    <h2>Sign in</h2>
+    <p>Use your CloudMoon account to continue.</p>
+    <input id="email" type="email" placeholder="Email" autocomplete="email"/>
+    <input id="pass" type="password" placeholder="Password" autocomplete="current-password"/>
+    <div id="login-error"></div>
+    <button id="submit-btn" onclick="doLogin()">Sign in</button>
+    <button id="create-link" onclick="openVideo()">Create an account</button>
+  </div>
+</div>
+<div id="vid-bg">
+  <div id="vid-box">
+    <div id="vid-header">
+      <h2>Create an account</h2>
+      <button id="vid-close" onclick="closeVideo()">✕</button>
+    </div>
+    <video id="acct-video" src="https://cdn.jsdelivr.net/gh/4texas4/cloud@main/account.mp4" controls playsinline></video>
+  </div>
+</div>
+<div style="visibility:hidden;height:100%;position:fixed;inset:0" id="app">
+  <div class="container" ref="containerDiv">
+    <div id="floating-ball" ref="floating-ball" class="floating-ball" v-show="!openMenu"
+         :style="{ left: ballPosition.x + 'px', top: ballPosition.y + 'px' }"
+         style="visibility:hidden"
+         @mousedown.prevent="ballStart" @touchstart.prevent="ballStart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round"
+           :style="{ transform: iconRotate ? 'rotate(90deg)' : 'none' }">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </div>
+    <div id="menu" class="menu" :style="{'pointer-events': openMenu? 'auto' : 'none'}">
+      <div v-if="openMenu" class="sidebar-overlay" @click="openMenu = false"></div>
+      <div class="sidebar" :class="{'sidebar-open':openMenu}">
+        <div class="sidebar-button"><div style="margin:auto 0">Streaming Quality</div><div style="display:flex;align-items:center"><select style="background:#42505b;color:#fff;height:2rem;width:4rem;border-radius:4px;border:none" v-model="quality" @change="changeQuality(quality)"><option value="HD">HD</option><option value="SD">SD</option><option value="LD">LD</option><option value="ULD">ULD</option></select></div></div>
+        <div class="sidebar-button"><div style="margin:auto 0">Full Screen</div><label class="switch"><input type="checkbox" v-model="isFullScreen" @change="{}"> <span class="slider"></span></label></div>
+        <div class="sidebar-button"><div style="margin:auto 0">Page Orientation</div><div class="sidebar-button-btn" @click="isRotateScreen=!isRotateScreen">↻</div></div>
+        <div class="sidebar-button"><div style="margin:auto 0">Rotate Game</div><div class="sidebar-button-btn" @click="rotateScreenDC()">↻</div></div>
+        <div class="sidebar-button"><div style="margin:auto 0">In-Game back button</div><div class="sidebar-button-btn" @click="sendDataChannelMessage('keycode>4')">Back</div></div>
+        <div class="sidebar-button"><div style="margin:auto 0">Restart App</div><div class="sidebar-button-btn" @click="sendDataChannelMessage('game>restart')">Restart</div></div>
+        <template v-if="supportPointerLock">
+          <div class="sidebar-button"><div style="margin:auto 0">Mouse Sensitivity [{{mouseSensitivity}}]</div><input type="range" style="max-width:50px;margin-top:4px" v-model="mouseSensitivity" min="0.5" max="2" step="0.1" @change="{}"></div>
+        </template>
+        <div class="sidebar-button"><div style="margin:auto 0;display:flex;align-items:start">Local Keyboard</div><label class="switch"><input type="checkbox" v-model="remoteIME" @change="{changeIME()}"> <span class="slider"></span></label></div>
+        <div class="sidebar-button" style="pointer-events:none;opacity:0.7"><div style="margin:auto 0">Delay</div><div style="background:#1a1f27;border:1px solid #42505b;border-radius:1rem;padding:0 1rem;height:2rem;line-height:2rem;color:#a1a1aa;font-size:0.9rem;min-width:4rem;text-align:center">{{dataChannelDelay}}ms</div></div>
+        <div class="sidebar-button" style="pointer-events:none;opacity:0.7"><div style="margin:auto 0">Time Left (sec)</div><div style="background:#1a1f27;border:1px solid #42505b;border-radius:1rem;padding:0 1rem;height:2rem;line-height:2rem;color:#6cff00;font-size:0.9rem;min-width:4rem;text-align:center">{{allSecLeft}}</div></div>
+        <div class="sidebar-button"><div style="margin:auto 0;color:#fc4a5e">Remove Menu Button</div><div class="sidebar-button-btn" style="background:#3b1a1a;border-color:#fc4a5e;color:#fc4a5e" @click="openMenu=false;$nextTick(()=>{document.getElementById('floating-ball').style.display='none'})">Remove</div></div>
+      </div>
+    </div>
+    <div class="game" ref="gameDiv" id="gameWrapper">
+      <div class="video-wrapper" ref="remoteWrapper" id="video-wrapper" :style="{ width: videoWidth + 'px', height: videoHeight + 'px' }">
+        <audio class="audio" id="remote-audio" ref="remoteAudio" style="display:none" controls muted autoplay playsinline></audio>
+        <video class="video" id="remote-video" ref="remoteVideo" :class="{rotate:isRotate}" autoplay muted playsinline disablepictureinpicture="true" controlslist="nodownload"></video>
+        <canvas id="canvasCoc" :class="{rotate:isRotate}" ref="remoteCanvas"
+          @mousemove.prevent="mousemove" @mousedown.prevent="mousedown" @mousewheel.prevent="mousewheel"
+          @mouseup.prevent="mouseup" @touchstart.prevent="touchstart" @touchmove.prevent="touchmove"
+          @touchend.prevent="touchend" @touchcancel.prevent="touchcancel"></canvas>
+        <button @click.stop="playGptRewardVideo" v-show="showADiv && isRewardVideoReady && rewardAdPass && allSecLeft <= 600" class="reward-btn" ref="remoteRewardBtn" style="position:absolute;display:none">+10 mins</button>
+      </div>
+    </div>
+
+    <div class="ping" id="ping" v-show="showPing">
+      <div style="width:32px;text-align:center" :class="{green: dataChannelDelay<=250, yellow: dataChannelDelay>250&&dataChannelDelay<=500, red: dataChannelDelay>500}">{{dataChannelDelay}}ms</div>
+    </div>
+    <div id="loading" class="loading" style="position:fixed;left:0;top:0;pointer-events:none;background:#fff;width:100vw;height:100vh;z-index:9999;display:flex;align-items:center;justify-content:center">
+      <div style="display:flex;flex-direction:column;align-items:center;width:80%;max-width:320px;gap:20px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;text-align:center">
+        <img id="run-game-icon" src="" alt="" style="width:80px;height:80px;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.15);display:none"/>
+        <div class="run-spinner"></div>
+        <div id="step-msg" style="font-size:14px;color:#222;font-weight:500;min-height:20px"></div>
+        <div style="width:100%;background:#eee;border-radius:99px;height:6px;overflow:hidden">
+          <div id="run-progress-bar" style="height:100%;width:0%;background:#0066ff;border-radius:99px;transition:width .4s ease"></div>
+        </div>
+        <button onclick="window.location.reload()" style="background:none;border:1px solid #ddd;color:#888;padding:6px 18px;border-radius:20px;cursor:pointer;font-size:13px;font-family:inherit">← Back</button>
+      </div>
+    </div>
+    <div class="startGame" v-show="showPlayBtn" style="width:100%;height:100%;position:fixed;left:0;top:0;pointer-events:auto;z-index:999998;display:flex;justify-content:center;align-items:center;background:#000">
+      <button @click="startGame" class="btn-info" v-show="showPlayBtn" style="display:none">Enter Game</button>
+    </div>
+    <div id="input-div" class="input-div" v-show="inputTextShow">
+      <input id="input-div_input" type="text" ref="input" v-model="inputTextStr" @keyup.enter.exact="sendText" @keyup.esc.exact="closeInput" class="input-div_input"/>
+      <div class="input-div_div">
+        <button @click="sendText" class="input-div_div_button">
+          <svg style="color:#fff" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// Intercept axios /web/ad to return unlimited time
+(function waitForAxios() {
+  if (!window.axios) { setTimeout(waitForAxios, 50); return; }
+  axios.interceptors.response.use(function(response) {
+    if (response.config && response.config.url && response.config.url.includes('/web/ad')) {
+      response.data = {
+        code: 0,
+        data: {
+          timeSecLeft: 99999999,
+          rewardAdPass: false,
+          initOrientation: 1,
+          unlimit: true,
+          showAD: false,
+          uuid: ''
+        }
+      };
+    }
+    return response;
+  });
+})();
+</script>
+
+<script>
+const nenly_generate_userid="false",nenly_screen_height="1280",nenly_screen_width="720",nenly_turn_server="stun:stun.nenly.cn:53006",nenly_es_url="",nenly_rotate_screen="true",nenly_enable_fullscreen="false",nenly_RealIp="",nenly_game_name="false",nenly_show_vconsole="false",nenly_show_ping="false",nenly_env="test",nenly_send_metric="false",nenly_max_resolution="false",nenly_show_loading="false",nenly_metric_url="",nenly_lock_mouse="false",nenly_log_level="1";
+</script>
+
+
+<script>
+function loading(){let e;if(e=(window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth)>(window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight)?0:90,90===e){let e=document.getElementsByClassName("loading")[0];e.style.transform="translate(-50%, -50%) rotate(90deg)",e.style["transform-origin"]="center",e.style.width="100vh",e.style.height="100vw",e.style.top="50%",e.style.left="50%"}}function removeLoading(){let e=document.getElementsByClassName("loading")[0];e.style.animation="opacity_none 1s ease-in",e.style.animationFillMode="forwards",setTimeout((function(){e.style.display="none"}),1e3)}
+</script>
+
+
+<script>
+function detectAdBlock(){return new Promise((t=>{let e=!1;const o=document.createElement("div");o.setAttribute("class","pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads text-ad-links ad-banner adsbox"),o.style.setProperty("position","absolute","important"),o.style.setProperty("top","-9999px","important"),o.style.setProperty("left","-9999px","important"),o.style.setProperty("width","1px","important"),o.style.setProperty("height","1px","important"),document.body.appendChild(o);const n=document.createElement("script"),d="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?time="+(new Date).getTime();function a(){setTimeout((()=>{const d=window.getComputedStyle(o);"none"!==d.getPropertyValue("display")&&"hidden"!==d.getPropertyValue("visibility")&&null!==o.offsetParent&&0!==o.offsetHeight||(e=!0);try{document.body.removeChild(o),document.head.removeChild(n)}catch(t){}t(e)}),100)}n.src=d,n.type="text/javascript",n.async=!0,n.onerror=function(){e=!0,a()},n.onload=function(){e=!1,a()},document.head.appendChild(n)}))}
+</script>
+
+
+<script>
+Vue.component("ad",{template:'\n<div class="a-div-box" ref="el"></div>\n',props:["placementName","isRewardVideoReady"],data:()=>({placement:null,adLoadTimeout:null,noAdsReturnTimer:5e3,failsafeTimeout:null,failSafeTimer:35e3}),mounted(){this.initAd()},beforeDestroy(){this.destroyAd()},methods:{initAd(){const e=this.placementName,t=(t,n)=>{"vertical_sticky"===e?n.Config.verticalSticky().display():"horizontal_sticky"===e||"mobile_horizontal_sticky"===e||"video_slider"===e?this.placement=n.Config.get(e).display({body:!0}):"gpt_reward"===e?(this.placement=n.Config.get("gpt_reward").display(this.$refs.el).setKnown("gptRewarded"),n.Config.getKnown("gptRewarded").rewardedApi((e=>{e.on("loading",(e=>{})),e.on("empty",(e=>{})),e.on("error",(e=>{})),e.on("ready",(e=>{this.$emit("update-reward-ready",!0)})),e.on("rewarded",(t=>{this.$emit("update-reward-ready",!1),this.$emit("update-rewarded",!0),e.clear()})),e.on("closed",(t=>{this.$emit("update-reward-ready",!1),e.clear()}))}))):(n.Config.setBreakPoint("desktop","min-width:720px"),this.placement=n.Config.get(e).display(this.$refs.el))};if(window.__VM)window.__VM.push(t);else{const e=setInterval((()=>{window.__VM&&(clearInterval(e),window.__VM.push(t))}),300)}},destroyAd(){}}});const ModalConstructor=Vue.extend({template:'<div class="modal-overlay"><div class="modal-container"><div v-if="title!=\'\'" class="modal-header"><span class="modal-title">{{ title }}</span><button class="modal-close" @click="close">×</button></div><div class="modal-body"><div v-html="content"></div></div><div class="modal-footer"><button v-if="showCancel" class="modal-btn cancel-btn" @click="cancel">{{ cancelText }}</button><button class="modal-btn confirm-btn" @click="confirm">{{ confirmText }}</button></div></div></div>',props:{icon:{type:String,default:""},title:{type:String,default:""},content:{type:String,default:""},confirmText:{type:String,default:"ok"},cancelText:{type:String,default:"cancel"},showCancel:{type:Boolean,default:!1},checkboxText:{type:String,default:""}},data:()=>({checkboxChecked:!1}),methods:{confirm(){this.destroy(),this.onConfirm&&this.onConfirm({checkbox:this.checkboxChecked})},cancel(){this.destroy(),this.onCancel&&this.onCancel()},close(){this.destroy()},destroy(){this.$destroy(),this.$el.parentNode.removeChild(this.$el)}},mounted(){if(!document.getElementById("global-modal-style")){const e=document.createElement("style");e.id="global-modal-style",e.innerHTML='.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;justify-content:center;align-items:center;z-index:9999}.modal-container{width:430px;background:rgba(40,51,61,1);border-radius:5px;overflow:hidden}.modal-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-weight:bold;border-bottom:1px solid #eee}.modal-title{font-size:16px}.modal-close{background:none;border:none;font-size:20px;cursor:pointer}.modal-body{display:flex;align-items:center;padding:32px;font-size:15px;color:#fff}.modal-footer{display:flex;justify-content:space-between;padding:0 16px 32px 16px;text-align:right;width:70%;margin:0 auto}.modal-btn{min-width:60px;width:100%;height:40px;border-radius:20px;border:none;cursor:pointer;font-size:14px}.confirm-btn{background-color:rgba(123,108,196,1);color:#fff}.cancel-btn{background-color:#f5f5f5;color:#333;margin-right:8px}',document.head.appendChild(e)}}});Vue.prototype.$modal=function(e){const t=new ModalConstructor({propsData:e});t.onConfirm=e.onConfirm,t.onCancel=e.onCancel;const n=t.$mount();document.body.appendChild(n.$el)};
+</script>
+
+<script>
+// keyToKeyCodeMap
+const keyToKeyCodeMap={a:65,b:66,c:67,d:68,e:69,f:70,g:71,h:72,i:73,j:74,k:75,l:76,m:77,n:78,o:79,p:80,q:81,r:82,s:83,t:84,u:85,v:86,w:87,x:88,y:89,z:90,0:48,1:49,2:50,3:51,4:52,5:53,6:54,7:55,8:56,9:57,enter:13,escape:27,backspace:8,tab:9,space:32," ":32,shift:16,control:17,alt:18,meta:91,capslock:20,numlock:144,scrolllock:145,pause:19,arrowleft:37,arrowup:38,arrowright:39,arrowdown:40,insert:45,delete:46,home:36,end:35,pageup:33,pagedown:34,f1:112,f2:113,f3:114,f4:115,f5:116,f6:117,f7:118,f8:119,f9:120,f10:121,f11:122,f12:123,"`":192,"-":189,"=":187,"[":219,"]":221,"\\":220,";":186,"'":222,",":188,".":190,"/":191,num0:96,num1:97,num2:98,num3:99,num4:100,num5:101,num6:102,num7:103,num8:104,num9:105,nummultiply:106,numadd:107,numsubtract:109,numdecimal:110,numdivide:111,lclick:991,rclick:992};
+
+// Roblox game config
+const gameConfig={"com.roblox.client":{supportLeftRocker:!0,supportRightClick:!0,pointerLock:!1,center:{x:162,y:575},keyBoardDirection:1,keyBoard:{" ":{str:"Space",key:"space",location:"",coordinate:"1142,575",size:"small"},shift:{str:"Shift",key:"shift",location:"",coordinate:"1050,575",size:"small"},escape:{str:"Esc",key:"escape",location:"",coordinate:"45,45",size:"small"}}}};
+
+const params = new URLSearchParams(window.location.search);
+window.__AppData = {
+  initParams:{screenWidth:nenly_screen_height,screenHeight:nenly_screen_width,language:params.get("language")||"en",nenlyGenerateUserId:"true"===nenly_generate_userid,nenlyEsUrl:nenly_es_url,nenlyRotateScreen:"true"===nenly_rotate_screen,enableFullScreen:"true"===nenly_enable_fullscreen,nenlyRealIp:nenly_RealIp,gameName:nenly_game_name,showVconsole:"true"===nenly_show_vconsole,env:nenly_env,sendMetric:"true"===nenly_send_metric,maxResolution:"true"===nenly_max_resolution,showLoading:"true"===nenly_show_loading,lockMouse:params.get("lock_mouse")||"true"===nenly_lock_mouse,metricUrl:nenly_metric_url,logLevel:nenly_log_level,statInterval:params.get("stat_interval")||3e3},
+  remoteIME:!0,inputTextShow:!1,inputTextStr:"",inputEnterType:"4",prevInputTextStr:"",inputTextCnt:0,zoom:!0,socket:null,quality:params.get("quality"),prevQuality:"SD",
+  selectedServer:localStorage.getItem('selectedServer')||'2',serverDetected:!1,serverLabel:'Detecting...',
+  sid:params.get("sid"),game:params.get("game"),token:params.get("token"),email:params.get("email"),userId:params.get("userid"),
+  codec:params.get("codec"),coordinatorUrl:params.get("coor_url"),coordinatorCloudfront:params.get("coor_cloudfront")||"",coordinatorTunnel:params.get("coor_tunnel")||"",androidInstanceId:params.get("android_instance_id")||"",bitRate:params.get("bit_rate")||0,showDataChannelMsg:"true"===params.get("show_datachannel_msg"),noTime:!1,
+  videoHeight:nenly_screen_height,videoWidth:nenly_screen_width,screenHeight:nenly_screen_height,screenWidth:nenly_screen_width,maxScreenWidth:1280,dataChannel:null,remoteStream:null,pc:null,
+  pcConfiguration:{iceServers:[{urls:"stun:stun.nenly.cn:53006"},{urls:"stun:stun.l.google.com:19302"}],bundlePolicy:"max-bundle",rtcpMuxPolicy:"require"},
+  rotation:0,rotate:!1,isHorizontal:!1,direction:2,enableTouch:!0,showPlayBtn:!1,isRotate:!1,dataChannelStartTimestamp:0,dataChannelDelay:0,showPing:!0,getout:!1,openPageTime:0,loadingDoneTime:0,streamingConnectedTime:0,sessionFirstScreenWidth:0,sessionFirstScreenHeight:0,steps:[],sendResizeJob:null,resizeCount:0,videoStats:null,sendCount:0,podName:"",sendStartGame:!1,clientRegisterTimer:null,muteBtn:"toggleVideo>on",lockMouseTimer:null,cursorHide:!1,cursorLock:!1,lastKeyDownCode:0,lastKeyDownTime:0,exitingPointerLock:!1,keyDownMap:{},timeDiff:0,resizeGamePad:!1,alwaysSendMove:"true"===params.get("always_send_move"),codec_type:params.get("codec_type")||0,currentGameConfig:{},touchIdMap:new Map,touchCounter:11,showKeyboard:!0,isEditKeyboard:!1,dRadius:120,dStep:4,supportLeftRocker:!1,center:{x:0,y:0},leftRockerStart:!1,leftRockerEnd:!0,leftRockerPosition:{x:0,y:0},leftRockerPressedKeys:{},leftRockerRandom:{x:0,y:0},supportRightRocker:!1,rightRockerStart:!1,rightRockerEnd:!0,rightRockerPosition:{x:0,y:0},rightRockerPressedKeys:{},supportRightClick:!1,dEyeCenter:{x:0,y:0},dEyePosition:{x:0,y:0},dEyeRadius:350,startTime:null,liveTimeSet:[],gameConfig:{},moveX:0,moveY:0,pointerLockStart:!1,resetMoveTimer:null,scaleValue:1,ballDragging:!1,ballPosition:{x:0,y:document.documentElement.clientHeight/2},openMenu:!1,isFullScreen:!1,isRotateScreen:!1,podLocale:0,androidInstance:{},checkGame:null,supportPointerLock:!1,lastMoveEvent:null,sendMove:!1,mouseSensitivity:1,iconRotate:!1,keyRotate:!1,oldOffer:null,oldAnswer:null,editLeftPosition:!1,utcDate:"",joinRoomTimer:null,joinRoomCount:0,selectLayout:"",defaultKeyboard:null,defaultCenter:null,showADiv:!1,loadADiv:!1,_adsDisabled:!0,adPlaceholder:"",hideVertical:!1,isBlocked:!1,unlimitUser:!1,initOrientation:3,adBlockTimer:null,syncAccelerate:"",syncRotate:"",isRewardVideoReady:!1,allSecLeft:0,playGptReward:!1,rewardAdPass:!1,loadingProgress:0,showLoadingProgress:0,showLoadingADiv:!1,initShowLoadingADiv:!1,loadingVideoStatus:0,apiHostUrl:"",selectWsUrl:""
+};
+
+window.__keyToKeyCodeMap = keyToKeyCodeMap;
+window.__gameConfig = gameConfig;
+window.__GAME_VIEW_LANDSCAPE = 1;
+window.__GAME_VIEW_PORTRAIT = 0;
+</script>
+<script type="module">
+const BASE_JS = 'https://cdn.jsdelivr.net/gh/4texas4/cloud@main/';
+const [
+  { default: keyToKeyCodeMap2 },
+  { AppMethods, GAME_VIEW_LANDSCAPE, GAME_VIEW_PORTRAIT },
+  { default: gameConfig2 }
+] = await Promise.all([
+  import(BASE_JS + 'keyToKeyCodeMap.js'),
+  import(BASE_JS + 'app-methods.js'),
+  import(BASE_JS + 'gameConfig.js'),
+]);
+window.__AppMethods = AppMethods;
+window.__GAME_VIEW_LANDSCAPE = GAME_VIEW_LANDSCAPE;
+window.__GAME_VIEW_PORTRAIT = GAME_VIEW_PORTRAIT;
+window.__modulesReady = true;
+window.dispatchEvent(new Event('modules-ready'));
+</script>
+
+<script>
+const API_HOSTS=['https://api.cloudmoon.cloudbatata.com','https://api.prod.cloudmoonapp.com','https://api.prod.geometry.today','https://hrz5zfjq02.execute-api.us-east-1.amazonaws.com','https://api.prod.viewoncloud.com'];
+const ROBLOX_PKG='com.roblox.client',BASE='./cloudmoon-main';
+
+function getUser() {
+  try { return JSON.parse(localStorage.getItem('userData') || '{}'); } catch { return {}; }
+}
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0; return (c === 'x' ? r : r & 3 | 8).toString(16);
+  });
+}
+async function ping(host) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 1500);
+  try { return (await fetch(host + '/_ping', { signal: ctrl.signal })).ok; }
+  catch { return false; } finally { clearTimeout(t); }
+}
+let _cachedApiHost = null;
+async function getApiHost() {
+  if (_cachedApiHost) return _cachedApiHost;
+  return new Promise(resolve => {
+    let done = false, count = 0;
+    API_HOSTS.forEach(h => {
+      ping(h).then(ok => {
+        if (!done && ok) { done = true; _cachedApiHost = h; resolve(h); }
+        else if (++count === API_HOSTS.length && !done) resolve(null);
+      });
+    });
+  });
+}
+function apiFetch(host, path, opts = {}) {
+  const ud = getUser();
+  const did = localStorage.getItem('device_id') || uuid();
+  localStorage.setItem('device_id', did);
+  const url = new URL(host + path);
+  url.searchParams.set('device_type', 'web');
+  url.searchParams.set('query_uuid', uuid());
+  url.searchParams.set('site', 'cm');
+  url.searchParams.set('device_id', did);
+  const h = new Headers(opts.headers || {});
+  h.set('X-User-Locale', (navigator.language || 'en').split('-')[0]);
+  h.set('X-User-Language', 'en');
+  if (!h.has('Content-Type')) h.set('Content-Type', 'application/json');
+  if (ud.token) h.set('X-User-Token', ud.token);
+  return fetch(url.toString(), { ...opts, headers: h });
+}
+
+async function doLogin() {
+  const email = document.getElementById('email').value.trim();
+  const pass = document.getElementById('pass').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('submit-btn');
+  if (!email || !pass) { errEl.textContent = 'Please fill in both fields.'; return; }
+  btn.textContent = 'Signing in...'; btn.disabled = true; errEl.textContent = '';
+
+  const host = await getApiHost();
+  if (!host) { errEl.textContent = 'Could not reach server.'; btn.textContent = 'Sign In'; btn.disabled = false; return; }
+
+  const did = localStorage.getItem('device_id') || uuid();
+  localStorage.setItem('device_id', did);
+  const url = new URL(host + '/login/pwd');
+  url.searchParams.set('device_type', 'web'); url.searchParams.set('query_uuid', uuid());
+  url.searchParams.set('site', 'cm'); url.searchParams.set('device_id', did);
+
+  try {
+    const r = await (await fetch(url.toString(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-User-Language': 'en' },
+      body: JSON.stringify({ email, password: pass })
+    })).json();
+    if (r.code === 0) {
+      localStorage.setItem('userData', JSON.stringify({ userId: r.data.user_id, token: r.data.token, email }));
+      startRoblox();
+    } else {
+      errEl.textContent = r.message || 'Login failed.';
+      btn.textContent = 'Sign In'; btn.disabled = false;
+    }
+  } catch (e) {
+    errEl.textContent = 'Error: ' + e.message;
+    btn.textContent = 'Sign In'; btn.disabled = false;
+  }
+}
+
+async function startRoblox() {
+  const host = await getApiHost();
+  if (!host) { document.getElementById('login-error').textContent = 'Could not reach server.'; return; }
+
+  const ud = getUser();
+  let androidId = null;
+  try {
+    const pr = await (await apiFetch(host, '/phone/list')).json();
+    if (pr.code === 0 && pr.data?.list?.length > 0) androidId = pr.data.list[0].android_id;
+  } catch {}
+
+  try {
+    const cr = await (await apiFetch(host, '/phone/connect', {
+      method: 'POST',
+      body: JSON.stringify({
+        android_id: androidId, game_name: ROBLOX_PKG,
+        screen_res: '720x1280',
+        server_id: parseInt(localStorage.getItem('selectedServer') || '2'),
+        params: JSON.stringify({ language: 'en' }), ad_unblock: false
+      })
+    })).json();
+    if (cr.code === 0 && cr.data?.sid) {
+      bootApp(cr.data.sid, ud.token, ud.email, androidId);
+    } else {
+      document.getElementById('login-error').textContent = cr.message || 'Could not start game.';
+      document.getElementById('submit-btn').textContent = 'Sign In';
+      document.getElementById('submit-btn').disabled = false;
+    }
+  } catch (e) {
+    document.getElementById('login-error').textContent = 'Connection failed: ' + e.message;
+    document.getElementById('submit-btn').textContent = 'Sign In';
+    document.getElementById('submit-btn').disabled = false;
+  }
+}
+
+function bootApp(sid, token, email, userId) {
+  // Show game icon immediately
+  const img = document.getElementById('run-game-icon');
+  if (img) { img.src = 'https://play-lh.googleusercontent.com/7cIIPlWm4m7AGqVpEsIfyL-HW4cQla4ucXnfalMft1TMIYQIlf2vqgmthlZgbNAQoaQ=w240-h480-rw'; img.style.display = ''; }
+
+  document.getElementById('login-screen').style.display = 'none';
+  const appEl = document.getElementById('app');
+  appEl.style.visibility = 'visible';
+  if (window._splashDone) window._splashDone();
+
+  function init() {
+    if (!window.__modulesReady) { window.addEventListener('modules-ready', init, {once:true}); return; }
+
+    const fakeParams = new URLSearchParams();
+    fakeParams.set('sid', sid);
+    fakeParams.set('quality', localStorage.getItem('quality') || 'SD');
+
+    const AppData = window.__AppData;
+    AppData.sid = sid;
+    AppData.token = token;
+    AppData.email = email;
+    AppData.userId = userId;
+    AppData.quality = localStorage.getItem('quality') || 'SD';
+
+    const AppMethods = window.__AppMethods;
+    const GAME_VIEW_LANDSCAPE = window.__GAME_VIEW_LANDSCAPE;
+    const GAME_VIEW_PORTRAIT = window.__GAME_VIEW_PORTRAIT;
+    const gameConfig = window.__gameConfig;
+
+    const _keyboardOrient = AppMethods.keyboardOrient;
+    if (_keyboardOrient) {
+      AppMethods.keyboardOrient = function(...args) {
+        if (!document.getElementById('keyboard')) return;
+        return _keyboardOrient.apply(this, args);
+      };
+    }
+    const _rewardBtnOrient = AppMethods.rewardBtnOrient;
+    if (_rewardBtnOrient) {
+      AppMethods.rewardBtnOrient = function(...args) {
+        if (!this.$refs || !this.$refs.remoteRewardBtn) return;
+        return _rewardBtnOrient.apply(this, args);
+      };
+    }
+    const _pingOrient = AppMethods.pingOrient;
+    if (_pingOrient) {
+      AppMethods.pingOrient = function(...args) {
+        try {
+          if (!this.$refs || !this.$refs.containerDiv || !this.$refs.containerDiv.clientWidth) return;
+          return _pingOrient.apply(this, args);
+        } catch(e) {}
+      };
+    }
+
+    ['containerOrient', 'videoOrient', 'screenDirection'].forEach(name => {
+      const orig = AppMethods[name];
+      if (orig) {
+        AppMethods[name] = function(...args) {
+          try {
+            if (!this.$refs || !this.$refs.gameDiv || !this.$refs.gameDiv.clientWidth) return;
+            return orig.apply(this, args);
+          } catch(e) {}
+        };
+      }
+    });
+
+    const STEP_PROGRESS = {
+      'Welcome':            5,
+      'Finding':           10,
+      'Use Base':          15,
+      'Server found':      20,
+      'successfully conn': 35,
+      'joined the room':   50,
+      'Waiting for screen':60,
+      'signaling state':   70,
+      'handle track':      75,
+      'Local parameters':  80,
+      'ice connection':    85,
+      'connection state:connected': 90,
+      'bind video':        92,
+      'Game stream':       95,
+      'Screen connected':  98,
+      'Data Channel':     100,
+    };
+    function setProgress(pct) {
+      const bar = document.getElementById('run-progress-bar');
+      if (bar) bar.style.width = Math.min(100, pct) + '%';
+    }
+    function updateProgressFromStep(text) {
+      for (const [key, pct] of Object.entries(STEP_PROGRESS)) {
+        if (text.includes(key)) { setProgress(pct); break; }
+      }
+      const el = document.getElementById('step-msg');
+      if (el) el.textContent = text;
+    }
+    const _origPushSteps = AppMethods.pushSteps;
+    if (_origPushSteps) {
+      AppMethods.pushSteps = function(...args) {
+        updateProgressFromStep(String(args[0] || ''));
+        return _origPushSteps.apply(this, args);
+      };
+    }
+
+    let _loadingRemoved = false;
+    const _forceRemoveLoading = () => {
+      if (_loadingRemoved) return;
+      // Wait for the video to actually be playing and has rendered frames
+      const vid = document.getElementById('remote-video');
+      const doRemove = () => {
+        if (_loadingRemoved) return;
+        _loadingRemoved = true;
+        setProgress(100);
+        try { removeLoading(); } catch(e){}
+        const l = document.getElementById('loading');
+        if (l) l.style.display = 'none';
+        // Show the floating ball only after loading is gone
+        const ball = document.getElementById('floating-ball');
+        if (ball) ball.style.visibility = 'visible';
+      };
+      if (vid && vid.readyState >= 3 && !vid.paused) {
+        // Video already playing with data — remove immediately
+        doRemove();
+      } else if (vid) {
+        // Wait for actual video frame to render
+        vid.addEventListener('timeupdate', function onFrame() {
+          vid.removeEventListener('timeupdate', onFrame);
+          doRemove();
+        });
+      } else {
+        doRemove();
+      }
+    };
+
+    Object.keys(AppMethods).forEach(n => {
+      const orig = AppMethods[n];
+      if (typeof orig === 'function' && /channel|datachannel|dc.*open|open.*dc/i.test(n)) {
+        AppMethods[n] = function(...a) { const r = orig.apply(this, a); _forceRemoveLoading(); return r; };
+      }
+    });
+
+    setTimeout(() => {
+      const dcPoll = setInterval(() => {
+        const dc = window.App && window.App.dataChannel;
+        if (dc && dc.readyState === 'open') { clearInterval(dcPoll); _forceRemoveLoading(); }
+      }, 500);
+
+      setTimeout(() => { clearInterval(dcPoll); _forceRemoveLoading(); }, 45000);
+    }, 500);
+
+    window.App = new Vue({
+      el: '#app',
+      data: AppData,
+      watch: {
+        isRotateScreen(e) { this.direction = this.direction === GAME_VIEW_LANDSCAPE ? GAME_VIEW_PORTRAIT : GAME_VIEW_LANDSCAPE; this.changeOrientation(this.direction); },
+        direction(e) {},
+        isFullScreen(e) { e ? this.fullScreen() : this.exitFullScreen(); },
+        mouseSensitivity(e) { localStorage.setItem(`mouseSensitivity:${this.checkGame}`, e); },
+        isRewardVideoReady(e) {},
+        openMenu(val) {
+          if (val) this.detectCurrentServer();
+        }
+      },
+      computed: {
+        centerXPercent: {
+          get() { return Math.round(this.center.x / 1280 * 1e3) / 10; },
+          set(e) { const t = Math.max(0, Math.min(100, Math.round(10 * e) / 10)); this.center.x = Math.round(t / 100 * 1280); }
+        },
+        centerYPercent: {
+          get() { return Math.round(this.center.y / 720 * 1e3) / 10; },
+          set(e) { const t = Math.max(0, Math.min(100, Math.round(10 * e) / 10)); this.center.y = Math.round(t / 100 * 720); }
+        }
+      },
+      async mounted() {
+        await this.getApiHost();
+        let e = this;
+        if (log?.setLevel(parseInt(this.initParams.logLevel)), e.gameConfig = gameConfig,
+          document.getElementById('canvasCoc').addEventListener('mouseleave', (t => { e.mouseleave(t); })),
+          this.sid && '' !== this.sid) {
+          const e = await fetch(`${this.apiHostUrl}/web/sid?sid=${this.sid}`)
+            .then(e => { if (!e.ok) throw new Error(`HTTP error! status: ${e.status}`); return e.json(); })
+            .catch(e => (log.error('request error:', e), null));
+          if (!e || 0 !== e.code) return;
+          this.game = e.data.game; this.token = e.data.token; this.email = e.data.email;
+          this.userId = e.data.android_id; this.coordinatorTunnel = e.data.coor_tunnel;
+          this.androidInstanceId = e.data.android_instance_id; this.coordinatorCloudfront = e.data.coor_cloudfront;
+        }
+        this.getUTCDate(); setInterval((() => { this.getUTCDate(); }), 1e3);
+        e.initParams.showVconsole && new VConsole;
+        'false' !== this.initParams.gameName && null == this.game && (this.game = this.initParams.gameName);
+        this.openPageTime = Date.now(); loading(); this.checkAD();
+        const _gw = this.$refs.gameDiv ? this.$refs.gameDiv.clientWidth : window.innerWidth;
+        const _gh = this.$refs.gameDiv ? this.$refs.gameDiv.clientHeight : window.innerHeight;
+        _gw > _gh
+          ? this.ballPosition = { x: 0, y: _gh / 2 }
+          : this.ballPosition = { x: _gw / 2, y: 0 };
+        this.pushSteps('Welcome, ' + this.userId);
+        const t = setInterval((() => { this.showLoadingProgress += 1; this.showLoadingProgress >= 100 && clearInterval(t); }), 350);
+        this.loadingProgress = 10; this.streamingOn = !1; this.getout = !1;
+        if (this.initParams.nenlyGenerateUserId && !this.userId)
+          try { let e = window.localStorage; this.userId = e.userId ? e.userId : this.guid(); e.setItem('userId', this.userId); } catch (e) { this.userId = this.guid(); }
+        this.checkGame = this.game;
+        this.checkGame && this.checkGame.includes('YZGAME') && (this.checkGame = 'YZGAME');
+        const i = await fetch(`${this.apiHostUrl}/web/game_config?pkg=${this.checkGame}`)
+          .then(e => { if (!e.ok) throw new Error(`HTTP error! status: ${e.status}`); return e.json(); })
+          .catch(e => (log.error('request error:', e), null));
+        let s = {}; 0 === i?.code ? (s = i.data.config) : (s = this.gameConfig[this.checkGame] ?? {});
+        let n = localStorage.getItem(`mouseSensitivity:${this.checkGame}`); n && (this.mouseSensitivity = parseFloat(n));
+        this.currentGameConfig = s; this.supportPointerLock = s?.pointerLock ?? !1;
+        this.supportRightClick = s?.supportRightClick ?? !1; this.supportLeftRocker = s?.supportLeftRocker ?? !1;
+        this.supportRightRocker = s?.supportRightRocker ?? !1; this.center = s?.center ?? { x: 0, y: 0 };
+        this.defaultCenter = s?.center ?? { x: 0, y: 0 }; this.defaultKeyboard = s?.keyBoard;
+        const o = localStorage.getItem(`selectLayout:${this.game}`);
+        this.selectLayout = 'layout1' === o || 'layout2' === o || 'layout3' === o ? o : 'layout1';
+        this.loadKeyboardLayout(); this.connectStreaming();
+        window.sendDataChannelMessage = this.sendDataChannelMessage;
+        window.handleDCMessage = this.handleDCMessage;
+        const _gw2 = this.$refs.gameDiv ? this.$refs.gameDiv.clientWidth : window.innerWidth;
+        const _gh2 = this.$refs.gameDiv ? this.$refs.gameDiv.clientHeight : window.innerHeight;
+        this.videoWidth = _gw2;
+        this.videoHeight = Math.round(_gw2 / this.screenWidth * this.screenHeight);
+        let r = _gw2, h = _gh2;
+        e.initParams.nenlyRotateScreen ? e.direction = r > h ? 1 : 0 : e.direction = 1;
+        e.changeOrientation(e.direction);
+        'onorientationchange' in window && (window.onorientationchange = () => { window.dispatchEvent(new Event('resize')); });
+        'screen' in window && 'orientation' in window.screen && (window.screen.orientation.onchange = () => { window.dispatchEvent(new Event('resize')); });
+        window.onresize = () => { e.screenDirection(); };
+        window.oncontextmenu = e => { e.preventDefault(); };
+        document.addEventListener('pointerlockchange', this.pointerLockChange);
+        document.addEventListener('mozpointerlockchange', this.pointerLockChange);
+        document.addEventListener('webkitpointerlockchange', this.pointerLockChange);
+        document.addEventListener('fullscreenchange', (() => { this.isFullScreen = !!this.checkFullScreen(); }));
+        const a = this.currentGameConfig; this.dEyeRadius = a?.rightClickRadius ?? 350; this.gameLoop();
+      },
+      methods: Object.assign({
+        detectCurrentServer() {
+          const serverNames = { '1': '🇺🇸 US East', '2': '🇺🇸 US West', '3': '🇪🇺 EU', '4': '🌏 Asia' };
+          this.serverDetected = false;
+          this.serverLabel = 'Detecting...';
+          const saved = localStorage.getItem('selectedServer') || '2';
+          this.selectedServer = saved;
+          // Try to detect from active session pod name or just confirm saved preference
+          setTimeout(() => {
+            this.serverDetected = true;
+            this.serverLabel = serverNames[this.selectedServer] || 'US East';
+          }, 600);
+        },
+        changeServer(val) {
+          localStorage.setItem('selectedServer', val);
+          const serverNames = { '1': '🇺🇸 US East', '2': '🇺🇸 US West', '3': '🇪🇺 EU', '4': '🌏 Asia' };
+          this.serverLabel = serverNames[val] || 'US East';
+          this.serverDetected = true;
+        }
+      }, AppMethods)
+    });
+  }
+  init();
+}
+
+function openVideo() {
+  document.getElementById('vid-bg').classList.add('open');
+  document.getElementById('acct-video').play();
+}
+function closeVideo() {
+  document.getElementById('vid-bg').classList.remove('open');
+  const v = document.getElementById('acct-video'); v.pause(); v.currentTime = 0;
+}
+document.getElementById('vid-bg').addEventListener('click', e => { if (e.target === e.currentTarget) closeVideo(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeVideo();
+  if (e.key === 'Enter' && !document.getElementById('vid-bg').classList.contains('open')) doLogin();
+});
+
+
+(function() {
+  let pct = 0;
+  const bar = document.getElementById('splash-bar');
+  const t = setInterval(() => {
+    pct = Math.min(pct + (pct < 60 ? 8 : pct < 85 ? 3 : 0.5), 95);
+    if (bar) bar.style.width = pct + '%';
+  }, 120);
+  window._splashDone = () => {
+    clearInterval(t);
+    if (bar) bar.style.width = '100%';
+    setTimeout(() => { const s = document.getElementById('splash'); if (s) s.style.display = 'none'; }, 300);
+  };
+})();
+
+if (getUser().token) {
+  document.getElementById('login-screen').style.display = 'none';
+  if (!localStorage.getItem('selectedServer')) localStorage.setItem('selectedServer', '2');
+  getApiHost();
+  startRoblox();
+
+} else {
+  if (!localStorage.getItem('selectedServer')) localStorage.setItem('selectedServer', '2');
+  window._splashDone();
+  getApiHost();
+}
+</script>
+</body>
+</html>
+
+
+
+
